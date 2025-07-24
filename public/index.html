@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form</title>
+    <link rel="stylesheet" href="form.css"> 
+</head>
+<body>
+<form id="contactForm" action="http://localhost:5000/Submit" method="POST">
+    <h2>Contact Us</h2>
+    <label>Name:</label>
+    <input type="text" name="name" placeholder="Enter name">
+    <span class="error" id="nameError"></span>
+
+    <label>Email:</label>
+    <input type="email" name="email" placeholder="Enter email">
+    <span class="error" id="emailError"></span>
+
+    <label>Phone Number:</label>
+    <input type="text" name="phone" placeholder="Enter phone number">
+    <span class="error" id="phoneError"></span>
+
+    <label>Message:</label>
+    <textarea id="message" name="message" placeholder="Enter message"></textarea>
+    <span class="error" id="messageError"></span>
+
+    <button type="submit">Submit</button>
+</form>
+<script>
+  const form = document.getElementById('contactForm');
+
+  form.addEventListener('submit', function(event) {
+    ['nameError', 'emailError', 'phoneError', 'messageError'].forEach(id => {
+      document.getElementById(id).textContent = '';
+    });
+    let valid = true;
+    if (!form.name.value.trim()) {
+      document.getElementById('nameError').textContent = 'Name is required';
+      valid = false;
+    }
+    if (!form.email.value.trim()) {
+      document.getElementById('emailError').textContent = 'Email is required';
+      valid = false;
+    } else {
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(form.email.value.trim())) {
+        document.getElementById('emailError').textContent = 'Invalid email';
+        valid = false;
+      }
+    }
+    if (!form.phone.value.trim()) {
+      document.getElementById('phoneError').textContent = 'Phone number is required';
+      valid = false;
+    }
+    if (!form.message.value.trim()) {
+      document.getElementById('messageError').textContent = 'Message is required';
+      valid = false;
+    }
+
+    if (!valid) {
+      event.preventDefault();
+    }
+  });
+</script>
+</body>
+</html>
